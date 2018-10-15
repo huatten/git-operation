@@ -1,21 +1,37 @@
-# 如何保持github上fork的项目与原项目同步
-首先先通过 github 的 web 页面 fork 目标的项目
-前提是自己已经设置好了git,并且配置了相应的权限
-然后使用git clone命令在本地克隆自己 fork 的项目：
 
-git clone https://github.com/YOUR-USERNAME/project—name
+#### 如何保持github上fork的项目与原项目同步
 
-然后需要复制被自己fork的项目的git地址
-切换到自己之前克隆的项目的路径下，使用：
+在我的主页上有一个项目“useful-utils”,可以看到，它是从“383514580/useful-utils”fork来的。
+![Image text](fork.jpg)
 
+
+- 将自己主页的项目clone到本地
+
+```
+git clone https://github.com/MrTenger/useful-utils.git
+```
+- 此时查看项目的远程信息，发现都是关于我自己主页的，origin是分支名称
+
+```
 git remote -v
-就可以看到当前项目的远程仓库配置
+```
 
-然后使用下面的命令：
+- 此时为项目添加远程分支
 
-git remote add upstream 原始项目仓库的git地址
-然后如果你继续使git remove -v命令查看的话，就会发现这个时候已经和原始的被fork的项目产生了关联。
-如果想保持项目同步的话，一般使用下面的命令就好了：
+```
+git remote add upstream https://github.com/383514580/useful-utils.git
+```
 
-git fetch upstream
-git merge upstream/master
+- 如果远程项目进行了更新，我们则需要从upstream上拉取，这样本地代码就和原作者的代码保持同步了
+
+```
+git pull upstream master
+```
+
+- 将本地代码提交到自己的分支上，即origin，这样自己的主页上的项目就和原作者的项目代码进行了同步
+
+```
+git push origin master
+```
+
+总结：实现fork的项目和原项目保持同步的办法就是利用本地项目作为“中转”，为本地的项目添加两个远程信息，拉取原仓库的新代码，然后push到自己的仓库，就达到了同步。
